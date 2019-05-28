@@ -1,0 +1,38 @@
+﻿
+@model IEnumerable<MealService.Models.Meal>
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<h3>Все блюда</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Название</th>
+            <th>Стоимость</th>
+            <th>Описание</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var f in Model)
+        {
+            <tr>
+                <td>@Url.Content(f.Id.ToString())</td>
+                <td>@Url.Content(f.Name)</td>
+                <td>@Url.Content(f.Cost.ToString())</td>
+                <td>@Url.Content(f.Description)</td>
+                <td><a asp-action="Index" asp-controller="Meal" asp-route-id="@f.Id">Подробнее</a></td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
