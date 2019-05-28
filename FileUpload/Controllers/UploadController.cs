@@ -46,6 +46,21 @@ namespace FileUpload.Controllers
             return RedirectToAction("Index");
         }
 
-        
+        [HttpGet]
+        public IActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var file = _context.Files.Find(id);
+
+            if (file == null)
+            {
+                return NotFound();
+            }
+            return View(file);
+        }
+
     }
 }
