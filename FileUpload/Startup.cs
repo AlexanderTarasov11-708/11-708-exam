@@ -61,7 +61,7 @@ namespace FileUpload
             {
                 routes.MapRoute(
                      name: "default",
-                     template: "{controller=Upload}/{action=Index}/");
+                     template: "{controller=Home}/{action=Index}/");
                 routes.MapRoute(
                     name: "short",
                     template: "{i}",

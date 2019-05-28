@@ -5,12 +5,12 @@ using FileUpload.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using static FileUpload.Models.MyFile;
 
 namespace FileUpload.Controllers
 {
     public class UploadController : Controller
     {
-        private MyDbContext db;
         MyDbContext _context;
         IHostingEnvironment _appEnvironment;
 
@@ -22,28 +22,27 @@ namespace FileUpload.Controllers
 
         public IActionResult Index()
         {
-            return View(_context.Files.ToList());
+            return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddFile(IFormFile uploadedFile)
+        public async Task<IActionResult> AddFile(IFormFile uploadedFile, string shortDescription, string longDescription)
         {
             if (uploadedFile != null)
             {
-                // путь к папке Files
                 string path = "/Files/" + uploadedFile.FileName;
-                
-                // сохраняем файл в папку Files в каталоге wwwroot
+                string type = uploadedFile.ContentType;
                 using (var fileStream = new FileStream(_appEnvironment.WebRootPath + path, FileMode.Create))
                 {
                     await uploadedFile.CopyToAsync(fileStream);
                 }
-                MyFile file = new MyFile { Name = uploadedFile.FileName, Path = path };
+                MyFile file = new MyFile { Name = uploadedFile.FileName, Path = path, SimpleDescr = shortDescription, Description = longDescription };
                 _context.Files.Add(file);
                 _context.SaveChanges();
             }
 
-            return RedirectToAction("Index");
+
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpGet]
