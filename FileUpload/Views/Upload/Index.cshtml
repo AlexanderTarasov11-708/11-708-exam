@@ -1,0 +1,39 @@
+﻿
+@model IEnumerable<FileUpload.Models.MyFile>
+@{
+    ViewData["Title"] = "Добавление файла";
+}
+<h3>Выберите файл для загрузки</h3>
+<form asp-action="AddFile" asp-controller="Upload" method="post" enctype="multipart/form-data">
+    <div class="form-group">
+        <input type="file" name="uploadedFile" /><br>
+    </div>
+    <div class="form-group">
+        Короткое описание: <input type="text" id="simpleDescr" />
+    </div>
+    <div class="form-group">
+        Полное описание: <input type="text" id="description" /> <br />
+    </div>
+        <input type="submit" value="Загрузить" />
+</form>
+
+<h3>Все файлы</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Название</th>
+            <th>Путь</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var f in Model)
+        {
+        <tr>
+            <td>@Url.Content(f.Id.ToString())</td>
+            <td>@Url.Content(f.Name)</td>
+            <td>@Url.Content(f.Path)</td>
+        </tr>
+        }
+    </tbody>
+</table>
